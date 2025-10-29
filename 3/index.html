@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pembelajaran: Turunan Order Tinggi & Aplikasi</title>
+    
+    <!-- 1. Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. KaTeX (untuk render rumus matematika LaTeX) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMviyvieHnMg5MSaIm9RJfj2tkzTQRgdxfmE2GEGvKxBYETD4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmFAILkIwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+    
+    <!-- 3. Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 4. Konfigurasi Tailwind & Style Kustom -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+        }
+        .katex {
+            font-size: 1.1em !important;
+        }
+        details[open] summary ~ * {
+            animation: sweep 0.5s ease-in-out;
+        }
+        @keyframes sweep {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800 leading-relaxed">
+
+    <!-- Kontainer Utama -->
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-lg my-12 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-purple-700 to-purple-500 text-white p-8">
+            <h1 class="text-4xl font-bold mb-2">Modul Kalkulus Lanjutan</h1>
+            <p class="text-xl opacity-90">Turunan Parsial Order Tinggi dan Aplikasi</p>
+        </header>
+
+        <!-- Konten Modul -->
+        <main class="p-8 md:p-10">
+
+            <!-- TOPIK 1: TURUNAN PARSIAL ORDER TINGGI -->
+            <section id="topik-1" class="mb-12">
+                <h2 class="text-3xl font-semibold text-purple-700 mb-4 border-b-2 border-purple-200 pb-2">
+                    1. Turunan Parsial Order Tinggi
+                </h2>
+                <p class="mb-4">
+                    Kita bisa menurunkan sebuah fungsi beberapa kali. Jika $f$ adalah fungsi dua variabel ($x, y$), turunan parsial pertamanya ($f_x$ dan $f_y$) juga merupakan fungsi dari $x$ dan $y$.
+                </p>
+                <p class="mb-4">
+                    Kita bisa menurunkan fungsi-fungsi ini <strong class="font-semibold">lagi</strong> untuk mendapatkan <strong class="font-semibold">turunan parsial orde kedua</strong>.
+                </p>
+                
+                <div class="bg-purple-50 border border-purple-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-3">Notasi Turunan Parsial Orde Kedua</h3>
+                    <p class="mb-3">Ada empat turunan parsial orde kedua untuk $f(x, y)$:</p>
+                    <ol class="list-decimal list-inside space-y-3">
+                        <li><strong>(Turunkan thd $x$, lalu $x$ lagi)</strong>
+                            <br>$f_{xx} = (f_x)_x = \frac{\partial}{\partial x} \left( \frac{\partial f}{\partial x} \right) = \frac{\partial^2 f}{\partial x^2}$
+                        </li>
+                        <li><strong>(Turunkan thd $y$, lalu $y$ lagi)</strong>
+                            <br>$f_{yy} = (f_y)_y = \frac{\partial}{\partial y} \left( \frac{\partial f}{\partial y} \right) = \frac{\partial^2 f}{\partial y^2}$
+                        </li>
+                        <li><strong>(Turunkan thd $x$ dulu, lalu $y$)</strong>
+                            <br>$f_{xy} = (f_x)_y = \frac{\partial}{\partial y} \left( \frac{\partial f}{\partial x} \right) = \frac{\partial^2 f}{\partial y \partial x}$
+                        </li>
+                        <li><strong>(Turunkan thd $y$ dulu, lalu $x$)</strong>
+                            <br>$f_{yx} = (f_y)_x = \frac{\partial}{\partial x} \left( \frac{\partial f}{\partial y} \right) = \frac{\partial^2 f}{\partial x \partial y}$
+                        </li>
+                    </ol>
+                </div>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Teorema Clairaut (Turunan Campuran)</h3>
+                <p class="mb-4">
+                    Perhatikan $f_{xy}$ dan $f_{yx}$. Ini disebut <strong class="font-semibold">turunan parsial campuran (mixed partials)</strong>.
+                </p>
+                <p class="mb-4">
+                    <strong class="font-semibold">Teorema Clairaut</strong> menyatakan bahwa jika $f_{xy}$ dan $f_{yx}$ keduanya kontinu pada suatu domain, maka pada domain tersebut:
+                </p>
+                <div class="bg-gray-100 p-4 rounded-md text-center text-xl mb-4 shadow-inner">
+                    $f_{xy} = f_{yx}$
+                </div>
+                <p>Ini berarti urutan kita mengambil turunan (pada turunan campuran) tidak penting, selama fungsinya "berperilaku baik" (kontinu).</p>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Fungsi Tiga Variabel (Order Tinggi)</h3>
+                <p class="mb-4">
+                    Konsep ini berlaku sama untuk fungsi tiga variabel $f(x, y, z)$. Kita bisa memiliki $f_{xx}$, $f_{yy}$, $f_{zz}$, dan berbagai turunan campuran.
+                </p>
+                <p class="mb-4">
+                    Teorema Clairaut juga berlaku, yang berarti urutan tidak penting. Sebagai contoh:
+                </p>
+                <p class="mb-4">
+                    $f_{xyz} = (f_x)_y)_z = \frac{\partial}{\partial z} \left( \frac{\partial}{\partial y} \left( \frac{\partial f}{\partial x} \right) \right) = \frac{\partial^3 f}{\partial z \partial y \partial x}$
+                </p>
+                <p>Selama turunan-turunan ini kontinu, maka $f_{xyz} = f_{yxz} = f_{zxy} = f_{xzy} = \dots$</p>
+
+                <!-- Latihan Topik 1 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 1: Turunan Order Tinggi (3 Variabel)</h4>
+                    <p class="mb-4">Diberikan fungsi $f(x, y, z) = x^3 y^2 z + \sin(xy)$. Tentukan $f_{xxz}$ dan $f_{zyx}$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-purple-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Jawaban $f_{xxz}$:</strong> (Urutan: $x$, lalu $x$ lagi, lalu $z$)</p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 mb-3">
+                                <li>$f_x = 3x^2 y^2 z + y\cos(xy)$</li>
+                                <li>$f_{xx} = 6xy^2 z - y^2\sin(xy)$</li>
+                                <li>$f_{xxz} = 6xy^2$ (Suku kedua hilang karena $z$ dianggap konstan)</li>
+                            </ol>
+                            
+                            <p class="mb-3"><strong class="font-semibold">Jawaban $f_{zyx}$:</strong> (Urutan: $z$, lalu $y$, lalu $x$)</p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1">
+                                <li>$f_z = x^3 y^2$</li>
+                                <li>$f_{zy} = 2x^3 y$</li>
+                                <li>$f_{zyx} = 6x^2 y$</li>
+                            </ol>
+                            <p class="mt-4"><strong class="font-semibold">Catatan:</strong> $f_{xxz}$ dan $f_{zyx}$ tidak sama. Ini tidak melanggar Teorema Clairaut. Teorema Clairaut mengatakan $f_{xyz} = f_{yxz}$, bukan $f_{xxz} = f_{zyx}$. Urutan penting, tetapi jumlah variabel (dua $x$, satu $z$) juga penting!</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 2: APLIKASI TURUNAN PARSIAL -->
+            <section id="topik-2" class="mb-12">
+                <h2 class="text-3xl font-semibold text-purple-700 mb-4 border-b-2 border-purple-200 pb-2">
+                    2. Aplikasi Turunan Parsial
+                </h2>
+                <p class="mb-4">
+                    Turunan parsial sangat berguna untuk memodelkan dunia nyata. Dua aplikasi yang paling umum adalah menentukan nilai ekstrim (maksimum/minimum) dan mengestimasi error.
+                </p>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Aplikasi 1: Nilai Ekstrim (Maksimum & Minimum)</h3>
+                <p class="mb-4">
+                    Sama seperti di kalkulus satu variabel, kita mencari nilai maksimum atau minimum lokal dengan terlebih dahulu menemukan <strong class="font-semibold">titik kritis</strong>.
+                </p>
+                <ul class="list-disc list-inside space-y-2 mb-4">
+                    <li>
+                        <strong class="font-semibold">Titik Kritis:</strong> Titik $(a, b)$ adalah titik kritis dari $f(x, y)$ jika $f_x(a, b) = 0$ DAN $f_y(a, b) = 0$ (atau jika salah satu turunan parsial tidak ada).
+                    </li>
+                    <li>
+                        Secara geometris, ini adalah titik di mana bidang singgung (tangent plane) terhadap permukaan $z=f(x,y)$ adalah horizontal.
+                    </li>
+                </ul>
+
+                <h4 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Uji Turunan Kedua (Second Derivative Test)</h4>
+                <p class="mb-4">
+                    Setelah kita menemukan titik kritis $(a, b)$, kita perlu mengklasifikasikannya (apakah itu maks, min, atau bukan keduanya?). Kita menggunakan <strong class="font-semibold">Diskriminan $D$</strong>, yang juga dikenal sebagai Hessian.
+                </p>
+                <div class="bg-purple-50 border border-purple-200 p-5 rounded-lg mb-6">
+                    <p class="mb-3">Pertama, hitung $D$ pada titik $(a, b)$:</p>
+                    <div class="bg-white p-4 rounded-md text-center text-xl shadow-inner mb-4">
+                        $D(a, b) = f_{xx}(a, b) \cdot f_{yy}(a, b) - [f_{xy}(a, b)]^2$
+                    </div>
+                    <p class="font-semibold mb-2">Aturan Uji Turunan Kedua:</p>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Jika $D > 0$ dan $f_{xx}(a, b) > 0$, maka $f$ memiliki <strong class="font-semibold text-green-700">Minimum Lokal</strong> di $(a, b)$.</li>
+                        <li>Jika $D > 0$ dan $f_{xx}(a, b) < 0$, maka $f$ memiliki <strong class="font-semibold text-red-700">Maksimum Lokal</strong> di $(a, b)$.</li>
+                        <li>Jika $D < 0$, maka $f$ memiliki <strong class="font-semibold text-blue-700">Titik Pelana (Saddle Point)</strong> di $(a, b)$ (bukan maks atau min).</li>
+                        <li>Jika $D = 0$, tes ini <strong class="font-semibold">gagal</strong> (tidak ada kesimpulan).</li>
+                    </ol>
+                </div>
+
+                <!-- Latihan Topik 2.1 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 2.1: Mencari Nilai Ekstrim</h4>
+                    <p class="mb-4">Temukan dan klasifikasikan titik kritis dari $f(x, y) = x^2 + y^2 + 4x - 6y + 5$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-purple-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Langkah 1: Cari Titik Kritis (set $f_x=0$ dan $f_y=0$).</strong></p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>$f_x = 2x + 4 = 0 \implies x = -2$</li>
+                                <li>$f_y = 2y - 6 = 0 \implies y = 3$</li>
+                            </ul>
+                            <p>Satu-satunya titik kritis adalah $(-2, 3)$.</p>
+
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Langkah 2: Hitung Turunan Orde Kedua.</strong></p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>$f_{xx} = 2$</li>
+                                <li>$f_{yy} = 2$</li>
+                                <li>$f_{xy} = 0$</li>
+                            </ul>
+                            <p>(Perhatikan bahwa turunan kedua ini konstan untuk semua $(x, y)$).</p>
+
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Langkah 3: Hitung $D$ di titik $(-2, 3)$.</strong></p>
+                            <p>$D = f_{xx} \cdot f_{yy} - [f_{xy}]^2 = (2)(2) - (0)^2 = 4$</p>
+
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Langkah 4: Klasifikasikan.</strong></p>
+                            <p>Karena $D = 4 > 0$ dan $f_{xx} = 2 > 0$, maka titik $(-2, 3)$ adalah <strong class="font-semibold">Minimum Lokal</strong>.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-12 mb-3">Aplikasi 2: Aproksimasi Error (Diferensial Total)</h3>
+                <p class="mb-4">
+                    Kita dapat menggunakan diferensial total (dari modul 1) untuk mengestimasi seberapa besar error dalam perhitungan jika terdapat error dalam pengukuran input.
+                </p>
+                <p class="mb-4">
+                    Ingat kembali rumus diferensial total untuk $z = f(x, y)$:
+                </p>
+                <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mb-4">
+                    $dz = f_x(x, y) dx + f_y(x, y) dy$
+                </code>
+                <p>
+                    Kita bisa menafsirkan $dx$ dan $dy$ sebagai <strong class="font-semibold">error</strong> dalam pengukuran $x$ dan $y$. Maka $dz$ adalah <strong class="font-semibold">aproksimasi error</strong> yang dihasilkan pada $z$.
+                </p>
+
+                <!-- Latihan Topik 2.2 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 2.2: Estimasi Error</h4>
+                    <p class="mb-4">
+                        Luas sebuah persegi panjang dihitung sebagai $A = lw$. Saat pengukuran, panjang $l$ diukur sebagai $30$ cm dengan error maksimum $\pm 0.2$ cm, dan lebar $w$ diukur sebagai $20$ cm dengan error maksimum $\pm 0.1$ cm.
+                        <br>
+                        Gunakan diferensial total untuk mengestimasi error maksimum pada perhitungan Luas ($dA$).
+                    </p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-purple-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Langkah 1: Identifikasi fungsi dan variabel.</strong></p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>Fungsi: $A(l, w) = lw$</li>
+                                <li>Titik pengukuran: $l = 30$, $w = 20$</li>
+                                <li>Error (diferensial): $dl = 0.2$, $dw = 0.1$</li>
+                            </ul>
+
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Langkah 2: Cari turunan parsial.</strong></p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>$A_l = \frac{\partial A}{\partial l} = w$</li>
+                                <li>$A_w = \frac{\partial A}{\partial w} = l$</li>
+                            </ul>
+
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Langkah 3: Evaluasi turunan parsial di titik pengukuran.</strong></p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>$A_l(30, 20) = 20$</li>
+                                <li>$A_w(30, 20) = 30$</li>
+                            </ul>
+                            
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Langkah 4: Gunakan rumus diferensial total $dA = A_l dl + A_w dw$.</strong></p>
+                            <p>$dA = (20) (0.2) + (30) (0.1)$</p>
+                            <p>$dA = 4 + 3 = 7$</p>
+                            
+                            <p class="mb-3 mt-4"><strong class="font-semibold">Kesimpulan:</strong></p>
+                            <p>Estimasi error maksimum dalam perhitungan luas adalah $\pm 7$ cm$^2$.</p>
+                        </div>
+                    </details>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center p-6 bg-gray-800 text-gray-300 text-sm">
+            Modul Pembelajaran Interaktif Kalkulus Lanjutan
+        </footer>
+    </div>
+
+    <!-- 5. Script untuk menjalankan KaTeX Auto-Render -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ],
+                // Pastikan KaTeX tidak mengabaikan tag <code>
+                ignoredTags: ["script", "noscript", "style", "textarea", "pre", "option"]
+            });
+        });
+    </script>
+</body>
+</html>
