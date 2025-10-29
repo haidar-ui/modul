@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pembelajaran: Aturan Rantai & Jacobian</title>
+    
+    <!-- 1. Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. KaTeX (untuk render rumus matematika LaTeX) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMviyvieHnMg5MSaIm9RJfj2tkzTQRgdxfmE2GEGvKxBYETD4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmFAILkIwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+    
+    <!-- 3. Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 4. Konfigurasi Tailwind & Style Kustom -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+        }
+        .katex {
+            font-size: 1.1em !important;
+        }
+        details[open] summary ~ * {
+            animation: sweep 0.5s ease-in-out;
+        }
+        @keyframes sweep {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800 leading-relaxed">
+
+    <!-- Kontainer Utama -->
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-lg my-12 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-teal-700 to-teal-500 text-white p-8">
+            <h1 class="text-4xl font-bold mb-2">Modul Kalkulus Lanjutan</h1>
+            <p class="text-xl opacity-90">Aturan Rantai, Fungsi Implisit, dan Jacobian</p>
+        </header>
+
+        <!-- Konten Modul -->
+        <main class="p-8 md:p-10">
+
+            <!-- TOPIK 1: ATURAN RANTAI (DIFERENSIAL FUNGSI DARI FUNGSI) -->
+            <section id="topik-1" class="mb-12">
+                <h2 class="text-3xl font-semibold text-teal-700 mb-4 border-b-2 border-teal-200 pb-2">
+                    1. Aturan Rantai (Diferensial Fungsi dari Fungsi)
+                </h2>
+                <p class="mb-4">
+                    Di modul sebelumnya, kita mencari $\frac{\partial f}{\partial x}$. Kita mengasumsikan $x$ dan $y$ adalah variabel independen.
+                </p>
+                <p class="mb-4">
+                    Sekarang, bagaimana jika $x$ dan $y$ itu sendiri <strong class="font-semibold">bergantung pada variabel lain</strong>? Misalnya, $x$ dan $y$ bergantung pada $t$ (waktu). Ini disebut "fungsi dari fungsi", dan kita membutuhan <strong class="font-semibold">Aturan Rantai</strong>.
+                </p>
+                
+                <div class="bg-teal-50 border border-teal-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Kasus 1: $z = f(x, y)$, dimana $x=g(t)$ dan $y=h(t)$</h3>
+                    <p class="mb-3">
+                        Di sini, $z$ pada akhirnya hanya bergantung pada satu variabel, $t$. Kita mencari turunan total $\frac{dz}{dt}$.
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-center text-xl shadow-inner">
+                        $\frac{dz}{dt} = \frac{\partial z}{\partial x} \frac{dx}{dt} + \frac{\partial z}{\partial y} \frac{dy}{dt}$
+                    </div>
+                </div>
+
+                <div class="bg-teal-50 border border-teal-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Kasus 2 (Umum): $z = f(x, y)$, dimana $x=g(s, t)$ dan $y=h(s, t)$</h3>
+                    <p class="mb-3">
+                        Di sini, $z$ bergantung pada $s$ dan $t$. Kita mencari turunan parsial $\frac{\partial z}{\partial s}$ dan $\frac{\partial z}{\partial t}$.
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-xl shadow-inner space-y-3">
+                        <p>$\frac{\partial z}{\partial s} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial s} + \frac{\partial z}{\partial y} \frac{\partial y}{\partial s}$</p>
+                        <p>$\frac{\partial z}{\partial t} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial t} + \frac{\partial z}{\partial y} \frac{\partial y}{\partial t}$</p>
+                    </div>
+                    <p class="mt-4">
+                        <strong class="font-semibold">Tips:</strong> Anda bisa membayangkannya seperti "diagram pohon". Untuk mencari turunan $z$ terhadap $s$, telusuri semua "jalur" dari $z$ ke $s$ (yaitu $z \to x \to s$ dan $z \to y \to s$) dan jumlahkan.
+                    </p>
+                </div>
+                
+                <!-- Latihan Topik 1 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 1: Aturan Rantai</h4>
+                    <p class="mb-4">Diberikan $z = x^2 y^3$, dimana $x = s \cos(t)$ dan $y = s \sin(t)$. Tentukan $\frac{\partial z}{\partial s}$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-teal-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Jawaban:</strong> Kita gunakan rumus $\frac{\partial z}{\partial s} = \frac{\partial z}{\partial x} \frac{\partial x}{\partial s} + \frac{\partial z}{\partial y} \frac{\partial y}{\partial s}$.</p>
+                            <p class="mb-2"><strong class="font-semibold">Langkah 1: Cari semua 4 turunan parsial.</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>$\frac{\partial z}{\partial x} = 2xy^3$</li>
+                                <li>$\frac{\partial z}{\partial y} = 3x^2y^2$</li>
+                                <li>$\frac{\partial x}{\partial s} = \cos(t)$</li>
+                                <li>$\frac{\partial y}{\partial s} = \sin(t)$</li>
+                            </ul>
+                            <p class="mt-3 mb-2"><strong class="font-semibold">Langkah 2: Susun kembali.</strong></p>
+                            <p>$\frac{\partial z}{\partial s} = (2xy^3)(\cos(t)) + (3x^2y^2)(\sin(t))$</p>
+                            <p class="mt-3 mb-2"><strong class="font-semibold">Langkah 3 (Opsional, tapi bagus): Substitusi $x$ dan $y$.</strong></p>
+                            <p>$\frac{\partial z}{\partial s} = (2(s \cos t)(s \sin t)^3)(\cos t) + (3(s \cos t)^2(s \sin t)^2)(\sin t)$</p>
+                            <p>$\frac{\partial z}{\partial s} = 2(s \cos t)(s^3 \sin^3 t)(\cos t) + 3(s^2 \cos^2 t)(s^2 \sin^2 t)(\sin t)$</p>
+                            <p>$\frac{\partial z}{\partial s} = 2s^4 \cos^2 t \sin^3 t + 3s^4 \cos^2 t \sin^3 t$</p>
+                            <p class="mt-2 font-semibold">$\frac{\partial z}{\partial s} = 5s^4 \cos^2 t \sin^3 t$</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 2: FUNGSI IMPLISIT -->
+            <section id="topik-2" class="mb-12">
+                <h2 class="text-3xl font-semibold text-teal-700 mb-4 border-b-2 border-teal-200 pb-2">
+                    2. Diferensial Fungsi Implisit
+                </h2>
+                <p class="mb-4">
+                    Terkadang, hubungan antar variabel tidak diberikan secara eksplisit (seperti $y = f(x)$), melainkan secara implisit, seperti $x^2 + y^2 = 1$.
+                </p>
+                <p class="mb-4">
+                    Kita bisa mencari turunan fungsi implisit menggunakan turunan parsial.
+                </p>
+
+                <div class="bg-teal-50 border border-teal-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Kasus 1: $F(x, y) = 0$ (mendefinisikan $y$ sebagai fungsi $x$)</h3>
+                    <p class="mb-3">
+                        Jika sebuah persamaan $F(x, y) = 0$ mendefinisikan $y$ secara implisit sebagai fungsi $x$, maka:
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-center text-xl shadow-inner">
+                        $\frac{dy}{dx} = - \frac{F_x}{F_y}$
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700">(dimana $F_x = \frac{\partial F}{\partial x}$ dan $F_y = \frac{\partial F}{\partial y}$)</p>
+                </div>
+
+                <div class="bg-teal-50 border border-teal-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Kasus 2: $F(x, y, z) = 0$ (mendefinisikan $z$ sebagai fungsi $x$ dan $y$)</h3>
+                    <p class="mb-3">
+                        Jika $F(x, y, z) = 0$ mendefinisikan $z$ secara implisit sebagai fungsi dari $x$ dan $y$, kita bisa mencari turunan parsial $z$:
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-xl shadow-inner space-y-3 text-center">
+                        <p>$\frac{\partial z}{\partial x} = - \frac{F_x}{F_z}$</p>
+                        <p>$\frac{\partial z}{\partial y} = - \frac{F_y}{F_z}$</p>
+                    </div>
+                </div>
+
+                <!-- Latihan Topik 2 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 2: Fungsi Implisit</h4>
+                    <p class="mb-4">Persamaan $x^3 + y^3 + z^3 + 6xyz = 1$ mendefinisikan $z$ sebagai fungsi dari $x$ dan $y$. Tentukan $\frac{\partial z}{\partial x}$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-teal-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Jawaban:</strong> Pertama, definisikan $F(x, y, z) = x^3 + y^3 + z^3 + 6xyz - 1 = 0$.</p>
+                            <p class="mb-2"><strong class="font-semibold">Langkah 1: Tentukan $F_x$ dan $F_z$.</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>$F_x = \frac{\partial F}{\partial x} = 3x^2 + 6yz$ (perlakukan $y, z$ konstan)</li>
+                                <li>$F_z = \frac{\partial F}{\partial z} = 3z^2 + 6xy$ (perlakukan $x, y$ konstan)</li>
+                            </ul>
+                            <p class="mt-3 mb-2"><strong class="font-semibold">Langkah 2: Gunakan rumus $\frac{\partial z}{\partial x} = - \frac{F_x}{F_z}$.</strong></p>
+                            <code class="block bg-gray-100 text-gray-700 p-3 rounded-md">
+                                $\frac{\partial z}{\partial x} = - \frac{3x^2 + 6yz}{3z^2 + 6xy}$
+                            </code>
+                            <p class="mt-2">Kita bisa sederhanakan dengan membagi 3:</p>
+                            <code class="block bg-gray-100 text-gray-700 p-3 rounded-md">
+                                $\frac{\partial z}{\partial x} = - \frac{x^2 + 2yz}{z^2 + 2xy}$
+                            </code>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 3: JACOBIAN -->
+            <section id="topik-3" class="mb-12">
+                <h2 class="text-3xl font-semibold text-teal-700 mb-4 border-b-2 border-teal-200 pb-2">
+                    3. Determinan Jacobian
+                </h2>
+                <p class="mb-4">
+                    Jacobian adalah alat yang sangat penting dalam kalkulus multivariabel, terutama untuk substitusi dalam integral lipat dan untuk menganalisis sistem fungsi.
+                </p>
+                <p class="mb-4">
+                    Secara sederhana, <strong class="font-semibold">Determinan Jacobian</strong> (atau "Jacobian") adalah determinan dari matriks yang berisi semua turunan parsial orde pertama dari suatu fungsi bernilai vektor.
+                </p>
+
+                <div class="bg-teal-50 border border-teal-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Definisi Jacobian 2x2</h3>
+                    <p class="mb-3">
+                        Misalkan kita memiliki transformasi $x = g(u, v)$ dan $y = h(u, v)$. Jacobian dari transformasi ini, dinotasikan $\frac{\partial(x, y)}{\partial(u, v)}$, adalah:
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-xl shadow-inner text-center">
+                        $J = \frac{\partial(x, y)}{\partial(u, v)} = \det \begin{pmatrix} \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\ \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \end{pmatrix} = \left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial y}{\partial v}\right) - \left(\frac{\partial x}{\partial v}\right)\left(\frac{\partial y}{\partial u}\right)$
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Contoh Klasik: Koordinat Polar</h3>
+                <p class="mb-2">Transformasi dari polar ($r, \theta$) ke kartesian ($x, y$) adalah:</p>
+                <p class_="mb-2">$x = r \cos(\theta)$</p>
+                <p class="mb-4">$y = r \sin(\theta)$</p>
+                <p class="mb-2">Mari kita hitung Jacobian $\frac{\partial(x, y)}{\partial(r, \theta)}$:</p>
+                <ul class="list-disc list-inside ml-4 mb-3">
+                    <li>$\frac{\partial x}{\partial r} = \cos(\theta)$</li>
+                    <li>$\frac{\partial x}{\partial \theta} = -r \sin(\theta)$</li>
+                    <li>$\frac{\partial y}{\partial r} = \sin(\theta)$</li>
+                    <li>$\frac{\partial y}{\partial \theta} = r \cos(\theta)$</li>
+                </ul>
+                <p>$J = \det \begin{pmatrix} \cos(\theta) & -r \sin(\theta) \\ \sin(\theta) & r \cos(\theta) \end{pmatrix} = (\cos \theta)(r \cos \theta) - (-r \sin \theta)(\sin \theta)$</p>
+                <p>$J = r \cos^2(\theta) + r \sin^2(\theta) = r(\cos^2 \theta + \sin^2 \theta) = r$</p>
+                <p class="mt-2">Jadi, Jacobian untuk transformasi polar adalah $r$.</p>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Sifat Invers</h3>
+                <p class="mb-4">
+                    Jacobian dari transformasi invers adalah kebalikan dari Jacobian asli.
+                </p>
+                <code class="block bg-gray-100 text-gray-700 p-3 rounded-md">
+                    $\frac{\partial(u, v)}{\partial(x, y)} = \frac{1}{\frac{\partial(x, y)}{\partial(u, v)}}$
+                </code>
+                
+                <!-- Latihan Topik 3 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 3: Hitung Jacobian</h4>
+                    <p class="mb-4">Tentukan Jacobian $\frac{\partial(x, y)}{\partial(u, v)}$ untuk transformasi $x = u^2 - v^2$ dan $y = 2uv$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-teal-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-2"><strong class="font-semibold">Langkah 1: Tentukan 4 turunan parsial.</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>$\frac{\partial x}{\partial u} = 2u$</li>
+                                <li>$\frac{\partial x}{\partial v} = -2v$</li>
+                                <li>$\frac{\partial y}{\partial u} = 2v$</li>
+                                <li>$\frac{\partial y}{\partial v} = 2u$</li>
+                            </ul>
+                            <p class="mt-3 mb-2"><strong class="font-semibold">Langkah 2: Susun matriks dan hitung determinan.</strong></p>
+                            <p>$J = \det \begin{pmatrix} 2u & -2v \\ 2v & 2u \end{pmatrix} = (2u)(2u) - (-2v)(2v)$</p>
+                            <p>$J = 4u^2 - (-4v^2) = 4u^2 + 4v^2$</p>
+                            <p class="mt-2 font-semibold">$J = 4(u^2 + v^2)$</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 4: FUNGSI IMPLISIT & JACOBIAN -->
+            <section id="topik-4" class="mb-12">
+                <h2 class="text-3xl font-semibold text-teal-700 mb-4 border-b-2 border-teal-200 pb-2">
+                    4. Fungsi Implisit Menggunakan Jacobian
+                </h2>
+                <p class="mb-4">
+                    Metode Jacobian bersinar ketika kita memiliki <strong class="font-semibold">sistem persamaan implisit</strong>.
+                </p>
+                <p class="mb-4">
+                    Misalkan kita punya sistem yang mendefinisikan $u$ dan $v$ sebagai fungsi dari $x$ dan $y$:
+                </p>
+                <p class="mb-2">$F(u, v, x, y) = 0$</p>
+                <p class="mb-4">$G(u, v, x, y) = 0$</p>
+                <p class="mb-4">
+                    Bagaimana jika kita ingin mencari $\frac{\partial u}{\partial x}$? Kita bisa menggunakan rasio dari determinan Jacobian.
+                </p>
+
+                <div class="bg-teal-50 border border-teal-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Rumus Jacobian untuk Fungsi Implisit</h3>
+                    <p class="mb-3">
+                        Untuk sistem di atas, jika kita ingin mencari $\frac{\partial u}{\partial x}$:
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-xl shadow-inner text-center">
+                        $\frac{\partial u}{\partial x} = - \frac{\partial(F, G) / \partial(x, v)}{\partial(F, G) / \partial(u, v)}$
+                    </div>
+                    <p class="mt-4">
+                        Penjelasan:
+                    </p>
+                    <ul class="list-disc list-inside ml-4 text-sm">
+                        <li>Penyebut $\partial(F, G) / \partial(u, v)$ adalah Jacobian "utama" dari $F, G$ terhadap variabel dependen $u, v$.</li>
+                        <li>Pembilang $\partial(F, G) / \partial(x, v)$ mengganti kolom $u$ (variabel yg dicari) dengan kolom $x$ (variabel yg terhadapnya diturunkan).</li>
+                        <li>Ini adalah aplikasi langsung dari Aturan Cramer pada diferensial total.</li>
+                    </ul>
+                </div>
+
+                <!-- Latihan Topik 4 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 4: Sistem Implisit</h4>
+                    <p class="mb-4">Diberikan sistem: <br> $F: u + v - x = 0$ <br> $G: u - v - y = 0$ <br>
+                    Tentukan $\frac{\partial u}{\partial x}$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-teal-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Jawaban:</strong> Kita ingin $\frac{\partial u}{\partial x} = - \frac{\partial(F, G) / \partial(x, v)}{\partial(F, G) / \partial(u, v)}$</p>
+                            <p class="mb-2"><strong class="font-semibold">Langkah 1: Hitung Jacobian penyebut $\partial(F, G) / \partial(u, v)$</strong></p>
+                            <p>$F_u = 1$, $F_v = 1$</p>
+                            <p>$G_u = 1$, $G_v = -1$</p>
+                            <p>$\det \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = (1)(-1) - (1)(1) = -2$</p>
+                            
+                            <p class="mt-3 mb-2"><strong class="font-semibold">Langkah 2: Hitung Jacobian pembilang $\partial(F, G) / \partial(x, v)$</strong></p>
+                            <p>$F_x = -1$, $F_v = 1$</p>
+                            <p>$G_x = 0$, $G_v = -1$</p>
+                            <p>$\det \begin{pmatrix} -1 & 1 \\ 0 & -1 \end{pmatrix} = (-1)(-1) - (1)(0) = 1$</p>
+
+                            <p class="mt-3 mb-2"><strong class="font-semibold">Langkah 3: Hitung rasio.</strong></p>
+                            <p>$\frac{\partial u}{\partial x} = - \frac{1}{-2} = \frac{1}{2}$</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center p-6 bg-gray-800 text-gray-300 text-sm">
+            Modul Pembelajaran Interaktif Kalkulus Lanjutan
+        </footer>
+    </div>
+
+    <!-- 5. Script untuk menjalankan KaTeX Auto-Render -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ],
+                ignoredTags: ["script", "noscript", "style", "textarea", "pre", "option"]
+            });
+        });
+    </script>
+</body>
+</html>
