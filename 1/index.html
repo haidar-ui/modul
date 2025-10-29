@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pembelajaran: Fungsi Beberapa Variabel</title>
+    
+    <!-- 1. Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. KaTeX (untuk render rumus matematika LaTeX) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMviyvieHnMg5MSaIm9RJfj2tkzTQRgdxfmE2GEGvKxBYETD4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmFAILkIwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+    
+    <!-- 3. Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 4. Konfigurasi Tailwind & Style Kustom -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6; /* Latar belakang abu-abu muda */
+        }
+        /* Style kustom untuk KaTeX agar tidak terlalu kecil */
+        .katex {
+            font-size: 1.1em !important;
+        }
+        /* Style untuk jawaban latihan */
+        details[open] summary ~ * {
+            animation: sweep 0.5s ease-in-out;
+        }
+        @keyframes sweep {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800 leading-relaxed">
+
+    <!-- Kontainer Utama -->
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-lg my-12 overflow-hidden">
+        
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-8">
+            <h1 class="text-4xl font-bold mb-2">Modul Kalkulus Lanjutan</h1>
+            <p class="text-xl opacity-90">Pengantar Fungsi Beberapa Variabel dan Turunan Parsial</p>
+        </header>
+
+        <!-- Konten Modul -->
+        <main class="p-8 md:p-10">
+
+            <!-- PENDAHULUAN: FUNGSI BEBERAPA VARIABEL -->
+            <section id="topik-1" class="mb-12">
+                <h2 class="text-3xl font-semibold text-blue-700 mb-4 border-b-2 border-blue-200 pb-2">
+                    1. Fungsi dari Beberapa Variabel
+                </h2>
+                <p class="mb-4">
+                    Dalam Kalkulus I, kita terbiasa dengan fungsi satu variabel, seperti $y = f(x)$. Fungsi ini memetakan satu input (misalnya, $x$) ke satu output (misalnya, $y$).
+                </p>
+                <p class="mb-4">
+                    Dalam dunia nyata, banyak kuantitas bergantung pada <strong class="font-semibold">lebih dari satu</strong> variabel independen. Inilah yang disebut <strong class="font-semibold">fungsi beberapa variabel</strong>.
+                </p>
+                
+                <div class="bg-blue-50 border border-blue-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-3">Definisi & Notasi</h3>
+                    <p class="mb-3">
+                        Sebuah <strong class="font-semibold">fungsi dari dua variabel</strong>, $f$, adalah aturan yang menetapkan setiap pasangan terurut $(x, y)$ dalam sebuah himpunan $D$ (domain) ke sebuah bilangan real unik, yang dinotasikan sebagai $z = f(x, y)$.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>$x$ dan $y$ adalah <strong class="font-semibold">variabel independen</strong>.</li>
+                        <li>$z$ adalah <strong class="font-semibold">variabel dependen</strong>.</li>
+                        <li>Grafik dari $z = f(x, y)$ adalah sebuah <strong class="font-semibold">permukaan (surface)</strong> di ruang 3D.</li>
+                    </ul>
+                </div>
+                
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Contoh Fungsi Beberapa Variabel</h3>
+                <ol class="list-decimal list-inside space-y-3 mb-6">
+                    <li>
+                        <strong>Geometri:</strong> Volume silinder $V$ bergantung pada jari-jari $r$ dan tinggi $h$.
+                        <br>
+                        <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mt-2">$V(r, h) = \pi r^2 h$</code>
+                    </li>
+                    <li>
+                        <strong>Fisika:</strong> Suhu $T$ pada sebuah plat logam bisa bergantung pada posisi $(x, y)$.
+                        <br>
+                        <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mt-2">$T(x, y) = 100 - x^2 - y^2$</code>
+                    </li>
+                    <li>
+                        <strong>Ekonomi:</strong> Biaya produksi $C$ bergantung pada jumlah unit barang A ($q_A$) dan barang B ($q_B$).
+                        <br>
+                        <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mt-2">$C(q_A, q_B) = 1000 + 5q_A + 2q_B$</code>
+                    </li>
+                </ol>
+
+                <!-- Latihan Topik 1 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 1: Identifikasi Fungsi</h4>
+                    <p class="mb-4">Sebuah kotak balok tanpa tutup memiliki panjang $l$, lebar $w$, dan tinggi $h$. Tuliskan fungsi $A$ untuk luas permukaan total kotak tersebut sebagai fungsi dari variabel-variabelnya!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-blue-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p><strong class="font-semibold">Jawaban:</strong></p>
+                            <p class="mb-3">Luas permukaan terdiri dari alas ($l \times w$) dan empat sisi (dua sisi $l \times h$ dan dua sisi $w \times h$).</p>
+                            <code class="block bg-gray-100 text-gray-700 p-3 rounded-md">$A(l, w, h) = lw + 2lh + 2wh$</code>
+                            <p class="mt-3">Ini adalah fungsi dari <strong>tiga</strong> variabel: $l$, $w$, dan $h$.</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 2: DOMAIN -->
+            <section id="topik-2" class="mb-12">
+                <h2 class="text-3xl font-semibold text-blue-700 mb-4 border-b-2 border-blue-200 pb-2">
+                    2. Domain dan Range
+                </h2>
+                <p class="mb-4">
+                    Seperti fungsi satu variabel, kita perlu tahu input apa saja yang "diizinkan" untuk sebuah fungsi.
+                </p>
+                <ul class="list-disc list-inside space-y-2 mb-6">
+                    <li><strong>Domain ($D$):</strong> Himpunan semua pasangan input $(x, y)$ yang valid sehingga fungsi $f(x, y)$ menghasilkan output bilangan real.</li>
+                    <li><strong>Range:</strong> Himpunan semua nilai output $z$ yang mungkin dihasilkan oleh fungsi.</li>
+                </ul>
+                <p class="mb-4">Dalam praktiknya, kita mencari domain dengan mengidentifikasi <strong class="font-semibold">pembatasan</strong>. Aturan paling umum adalah:</p>
+                <ol class="list-decimal list-inside space-y-2 font-medium">
+                    <li>Penyebut (bagian bawah pecahan) tidak boleh nol.</li>
+                    <li>Ekspresi di dalam akar kuadrat (atau akar genap lainnya) harus non-negatif ($\ge 0$).</li>
+                    <li>Ekspresi di dalam logaritma natural ($\ln$) harus positif ($> 0$).</li>
+                </ol>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Contoh Pencarian Domain</h3>
+                <p class="mb-4">Tentukan dan sketsakan domain dari fungsi $f(x, y) = \sqrt{4 - x^2 - y^2}$.</p>
+                <p class="mb-4">
+                    <strong>Pembahasan:</strong>
+                    Kita memiliki batasan akar kuadrat. Ekspresi di dalamnya harus non-negatif.
+                </p>
+                <div class="bg-gray-100 p-4 rounded-md text-center text-lg mb-4">
+                    $4 - x^2 - y^2 \ge 0$
+                    <br>
+                    $4 \ge x^2 + y^2$
+                    <br>
+                    $x^2 + y^2 \le 4$
+                </div>
+                <p>
+                    Ini adalah persamaan untuk semua titik $(x, y)$ yang berada <strong class="font-semibold">di dalam atau pada</strong> lingkaran dengan pusat di $(0, 0)$ dan jari-jari $r = \sqrt{4} = 2$.
+                </p>
+                <!--  -->
+
+                <!-- Latihan Topik 2 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 2: Tentukan Domain</h4>
+                    <p class="mb-4">Tentukan domain dari fungsi $g(x, y) = \frac{\ln(x)}{y-1}$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-blue-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p><strong class="font-semibold">Jawaban:</strong> Kita punya dua batasan:</p>
+                            <ol class="list-decimal list-inside space-y-2 mt-2">
+                                <li><strong>Batasan Logaritma:</strong> Argumen $\ln(x)$ harus positif. Jadi, $x > 0$.</li>
+                                <li><strong>Batasan Penyebut:</strong> Penyebut $y-1$ tidak boleh nol. Jadi, $y-1 \ne 0$ atau $y \ne 1$.</li>
+                            </ol>
+                            <p class="mt-3">
+                                <strong>Domain:</strong> Himpunan semua titik $(x, y)$ dimana $x > 0$ dan $y \ne 1$.
+                                <br>
+                                (Secara geometris: setengah bidang di sebelah kanan sumbu-y, dengan garis horizontal $y=1$ dihilangkan).
+                            </p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 3: TURUNAN PARSIAL -->
+            <section id="topik-3" class="mb-12">
+                <h2 class="text-3xl font-semibold text-blue-700 mb-4 border-b-2 border-blue-200 pb-2">
+                    3. Turunan Parsial
+                </h2>
+                <p class="mb-4">
+                    Ini adalah inti dari modul ini. Jika $z = f(x, y)$, bagaimana kita mengukur "laju perubahan" nya? Karena ada dua variabel independen, kita bisa mengukur laju perubahan terhadap $x$ (saja) atau terhadap $y$ (saja).
+                </p>
+                
+                <div class="bg-blue-50 border border-blue-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-3">Definisi Turunan Parsial</h3>
+                    <p class="mb-3">
+                        <strong class="font-semibold">1. Turunan Parsial $f$ terhadap $x$</strong> (notasi: $f_x$ atau $\frac{\partial f}{\partial x}$)
+                        <br>
+                        Ini adalah turunan dari $f(x, y)$ dimana kita memperlakukan $y$ <strong class="font-semibold">sebagai konstanta</strong> dan menurunkan fungsi tersebut terhadap $x$ seperti biasa.
+                    </p>
+                    <p>
+                        <strong class="font-semibold">2. Turunan Parsial $f$ terhadap $y$</strong> (notasi: $f_y$ atau $\frac{\partial f}{\partial y}$)
+                        <br>
+                        Ini adalah turunan dari $f(x, y)$ dimana kita memperlakukan $x$ <strong class="font-semibold">sebagai konstanta</strong> dan menurunkan fungsi tersebut terhadap $y$.
+                    </p>
+                    <p class="mt-3 text-sm text-gray-600">
+                        (Simbol $\partial$ disebut 'del' atau 'd parsial', digunakan untuk membedakan dari turunan biasa $d/dx$).
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Cara Menghitung Turunan Parsial</h3>
+                <p class="mb-2">Misalkan kita punya fungsi:</p>
+                <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mb-4">$f(x, y) = 3x^2y^4 + 5x - 7y + 10$</code>
+
+                <p class="mb-2"><strong class="font-semibold">Mencari $f_x = \frac{\partial f}{\partial x}$ (Anggap $y$ sebagai konstanta):</strong></p>
+                <ul class="list-disc list-inside mb-4 ml-4">
+                    <li>Turunan $3x^2y^4$ thd $x$ adalah $(3y^4) \cdot (2x) = 6xy^4$. (Pikirkan $y^4$ hanya sebagai angka pengali).</li>
+                    <li>Turunan $5x$ thd $x$ adalah $5$.</li>
+                    <li>Turunan $-7y$ thd $x$ adalah $0$. (Karena $y$ adalah konstanta).</li>
+                    <li>Turunan $10$ thd $x$ adalah $0$.</li>
+                </ul>
+                <p class="mb-4">Jadi: $\frac{\partial f}{\partial x} = 6xy^4 + 5$</p>
+
+                <p class="mb-2"><strong class="font-semibold">Mencari $f_y = \frac{\partial f}{\partial y}$ (Anggap $x$ sebagai konstanta):</strong></p>
+                <ul class="list-disc list-inside mb-4 ml-4">
+                    <li>Turunan $3x^2y^4$ thd $y$ adalah $(3x^2) \cdot (4y^3) = 12x^2y^3$. (Pikirkan $x^2$ sebagai angka pengali).</li>
+                    <li>Turunan $5x$ thd $y$ adalah $0$. (Karena $x$ adalah konstanta).</li>
+                    <li>Turunan $-7y$ thd $y$ adalah $-7$.</li>
+                    <li>Turunan $10$ thd $y$ adalah $0$.</li>
+                </ul>
+                <p class="mb-4">Jadi: $\frac{\partial f}{\partial y} = 12x^2y^3 - 7$</p>
+                
+                <!-- Latihan Topik 3 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 3: Tentukan Turunan Parsial</h4>
+                    <p class="mb-4">Tentukan $f_x$ dan $f_y$ untuk fungsi $f(x, y) = x e^{5y} + \cos(xy)$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-blue-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p><strong class="font-semibold">Jawaban $f_x$:</strong> (Anggap $y$ konstan)</p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>Turunan $x e^{5y}$ thd $x$ adalah $e^{5y} \cdot (1) = e^{5y}$.</li>
+                                <li>Turunan $\cos(xy)$ thd $x$ adalah $-\sin(xy)$ dikali turunan dalamnya (yaitu $y$) $\implies -y\sin(xy)$.</li>
+                            </ul>
+                            <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mb-4">$f_x = e^{5y} - y\sin(xy)$</code>
+                            
+                            <p><strong class="font-semibold">Jawaban $f_y$:</strong> (Anggap $x$ konstan)</p>
+                            <ul class="list-disc list-inside ml-4 mb-3">
+                                <li>Turunan $x e^{5y}$ thd $y$ adalah $x \cdot (e^{5y} \cdot 5) = 5xe^{5y}$.</li>
+                                <li>Turunan $\cos(xy)$ thd $y$ adalah $-\sin(xy)$ dikali turunan dalamnya (yaitu $x$) $\implies -x\sin(xy)$.</li>
+                            </ul>
+                            <code class="block bg-gray-100 text-gray-700 p-3 rounded-md">$f_y = 5xe^{5y} - x\sin(xy)$</code>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- TOPIK 4: DIFERENSIAL TOTAL -->
+            <section id="topik-4" class="mb-12">
+                <h2 class="text-3xl font-semibold text-blue-700 mb-4 border-b-2 border-blue-200 pb-2">
+                    4. Diferensial Total
+                </h2>
+                <p class="mb-4">
+                    Turunan parsial memberitahu kita bagaimana $z$ berubah jika <i>hanya</i> $x$ atau <i>hanya</i> $y$ yang berubah.
+                    <br>
+                    Bagaimana jika $x$ dan $y$ berubah <strong class="font-semibold">secara bersamaan</strong>?
+                </p>
+                <p class="mb-4">
+                    Perubahan total pada $z$, yang disebut $\Delta z$, dapat diaproksimasi (didekati) menggunakan <strong class="font-semibold">diferensial total</strong>, yang dinotasikan sebagai $dz$.
+                </p>
+                
+                <div class="bg-blue-50 border border-blue-200 p-5 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-3">Rumus Diferensial Total</h3>
+                    <p class="mb-3">
+                        Jika $z = f(x, y)$, maka diferensial total $dz$ didefinisikan sebagai:
+                    </p>
+                    <div class="bg-white p-4 rounded-md text-center text-xl shadow-inner">
+                        $dz = \left(\frac{\partial f}{\partial x}\right) dx + \left(\frac{\partial f}{\partial y}\right) dy$
+                    </div>
+                    <p class="mt-4">
+                        Di sini, $dx$ (atau $\Delta x$) adalah perubahan kecil pada $x$, dan $dy$ (atau $\Delta y$) adalah perubahan kecil pada $y$. Rumus ini pada dasarnya menggabungkan kedua laju perubahan (parsial) untuk mengestimasi perubahan total.
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Contoh Perhitungan Diferensial Total</h3>
+                <p class="mb-2">Tentukan diferensial total $dz$ untuk fungsi $z = f(x, y) = 5x^3 + y^2x$.</p>
+                <p class="mb-4">
+                    <strong>Langkah 1: Cari turunan parsialnya.</strong>
+                </p>
+                <ul class="list-none space-y-2 mb-4 ml-4">
+                    <li>$\frac{\partial z}{\partial x} = 15x^2 + y^2$</li>
+                    <li>$\frac{\partial z}{\partial y} = 2yx$</li>
+                </ul>
+                
+                <p class="mb-4">
+                    <strong>Langkah 2: Masukkan ke rumus $dz$.</strong>
+                </p>
+                <code class="block bg-gray-100 text-gray-700 p-3 rounded-md mb-4">
+                    $dz = (15x^2 + y^2) dx + (2xy) dy$
+                </code>
+                <p>
+                    Itu saja. Hasilnya adalah sebuah ekspresi yang memberitahu kita (secara aproksimasi) seberapa besar $z$ akan berubah jika kita tahu seberapa besar $x$ dan $y$ berubah.
+                </p>
+
+                <!-- Latihan Topik 4 -->
+                <div class="border-2 border-dashed border-gray-300 p-5 rounded-lg mt-8">
+                    <h4 class="text-lg font-semibold text-gray-700 mb-3">Latihan Topik 4: Tentukan Diferensial Total</h4>
+                    <p class="mb-4">Tentukan diferensial total $dw$ untuk fungsi $w = \ln(x^2 + y^2)$!</p>
+                    <details class="bg-gray-50 rounded-lg">
+                        <summary class="font-semibold text-blue-600 cursor-pointer p-3">
+                            Klik untuk melihat Jawaban & Pembahasan
+                        </summary>
+                        <div class="border-t border-gray-200 p-4">
+                            <p class="mb-3"><strong class="font-semibold">Langkah 1: Cari turunan parsial (gunakan aturan rantai).</strong>
+                                <br>
+                                (Ingat: turunan $\ln(u)$ adalah $\frac{1}{u} \cdot u'$)
+                            </p>
+                            <ul class="list-none space-y-2 mb-4 ml-4">
+                                <li>$\frac{\partial w}{\partial x} = \frac{1}{x^2 + y^2} \cdot (2x) = \frac{2x}{x^2 + y^2}$</li>
+                                <li>$\frac{\partial w}{\partial y} = \frac{1}{x^2 + y^2} \cdot (2y) = \frac{2y}{x^2 + y^2}$</li>
+                            </ul>
+                            <p class="mb-3"><strong class="font-semibold">Langkah 2: Masukkan ke rumus $dw$.</strong></p>
+                            <code class="block bg-gray-100 text-gray-700 p-3 rounded-md">
+                                $dw = \left(\frac{2x}{x^2 + y^2}\right) dx + \left(\frac{2y}{x^2 + y^2}\right) dy$
+                            </code>
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center p-6 bg-gray-800 text-gray-300 text-sm">
+            Modul Pembelajaran Interaktif Kalkulus Lanjutan
+        </footer>
+    </div>
+
+    <!-- 5. Script untuk menjalankan KaTeX Auto-Render -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                // Konfigurasi delimeters (penanda rumus)
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},  // Untuk rumus blok (display)
+                    {left: "$", right: "$", display: false},   // Untuk rumus inline
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ],
+                // Beritahu KaTeX untuk TIDAK mengabaikan tag <code>
+                ignoredTags: ["script", "noscript", "style", "textarea", "pre", "option"]
+            });
+        });
+    </script>
+</body>
+</html>
+
