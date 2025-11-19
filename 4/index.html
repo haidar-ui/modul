@@ -1,0 +1,221 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- PREAMBLE ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{fontspec}
+
+% Bahasa
+\usepackage[indonesian, provide=*]{babel}
+\babelprovide[import, onchar=ids fonts]{indonesian}
+
+% Font
+\babelfont{rm}{Noto Sans}
+\babelfont[indonesian]{rm}{Noto Sans}
+
+% Paket Matematika
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{parskip} % Jarak antar paragraf
+
+% Paket Warna & Kotak (Untuk tampilan menarik)
+\usepackage[most]{tcolorbox}
+\definecolor{mainblue}{RGB}{0, 102, 204}
+\definecolor{softblue}{RGB}{230, 242, 255}
+\definecolor{examplegreen}{RGB}{0, 153, 76}
+\definecolor{softexample}{RGB}{235, 250, 235}
+\definecolor{warningorange}{RGB}{255, 153, 51}
+
+% Konfigurasi Kotak Konsep
+\newtcolorbox{konsepbox}[1]{
+  colback=softblue,
+  colframe=mainblue,
+  fonttitle=\bfseries,
+  title=#1,
+  boxrule=1pt,
+  rounded corners,
+  arc=5pt,
+  breakable % Agar bisa pindah halaman jika panjang
+}
+
+% Konfigurasi Kotak Contoh
+\newtcolorbox{contohbox}[1]{
+  colback=softexample,
+  colframe=examplegreen,
+  fonttitle=\bfseries,
+  title=📝 Contoh: #1,
+  boxrule=1pt,
+  rounded corners,
+  arc=5pt,
+  breakable
+}
+
+\newtcolorbox{ingatbox}{
+  colback=white,
+  colframe=warningorange,
+  fonttitle=\bfseries,
+  title=💡 Ingat!,
+  boxrule=1pt,
+  coltitle=white
+}
+
+% Judul
+\title{\textbf{\LARGE Crash Course: Menaklukan Integral Lipat}\\ \large \textit{Panduan Naratif dari 1D ke 2D untuk Pemula}}
+\author{Asisten Kalkulus AI}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Pendahuluan: Jangan Panik Dulu!}
+
+Halo! Jika kamu membaca dokumen ini, mungkin kamu merasa Integral Lipat (\textit{Double Integrals}) itu menyeramkan. Ada dua cacing integral ($\iint$), ada $dx$, ada $dy$, kadang ada $r$ dan $\theta$. Tenang saja.
+
+Mari kita lupakan rumus-rumus rumit sejenak dan kembali ke dasar. Kita akan membangun pemahaman ini pelan-pelan, seperti menyusun lego.
+
+\section{Langkah 1: Mengingat Kembali Masa Lalu (Integral Biasa)}
+
+Sebelum masuk ke integral lipat, bayangkan dulu integral biasa yang sudah kamu pelajari: $\int_a^b f(x) \, dx$.
+
+Apa sebenarnya arti fisisnya?
+\begin{itemize}
+    \item Kita punya kurva $y = f(x)$.
+    \item Kita punya batas dari $x=a$ sampai $x=b$.
+    \item Integral menghitung **Luas Area** di bawah kurva tersebut.
+\end{itemize}
+
+\begin{konsepbox}{Analogi Pagar}
+Bayangkan kamu punya pagar yang tingginya berubah-ubah sesuai fungsi $f(x)$. Integral $\int f(x) dx$ menghitung luas permukaan papan kayu yang dibutuhkan untuk membuat pagar itu.
+\end{konsepbox}
+
+\begin{contohbox}{Integral 1 Variabel}
+Hitung luas di bawah garis $y = 2x$ dari $x=0$ sampai $x=3$.
+\[ \int_0^3 2x \, dx = \left[ x^2 \right]_0^3 = 3^2 - 0^2 = 9 \]
+Jadi, luas area tersebut adalah 9 satuan luas.
+\end{contohbox}
+
+\section{Langkah 2: Naik Kelas ke Dimensi 3 (Integral Lipat Dua)}
+
+Sekarang, mari kita naik satu dimensi.
+\begin{itemize}
+    \item Kalau dulu $y=f(x)$ adalah garis melengkung, sekarang $z=f(x,y)$ adalah sebuah **permukaan** (seperti selimut yang melayang di atas lantai).
+    \item Kalau dulu daerahnya hanya garis lurus, sekarang daerahnya adalah sebuah **bidang datar** di lantai (kita sebut daerah $R$).
+\end{itemize}
+
+Integral Lipat Dua menghitung **VOLUME** ruang di bawah selimut tersebut.
+
+\[ \iint_R f(x,y) \, dA \]
+
+Simbol $dA$ artinya "potongan area kecil". Biasanya, $dA = dx \, dy$ (panjang $\times$ lebar kecil).
+
+\begin{konsepbox}{Analogi Roti Tawar}
+Bayangkan sebuah roti tawar yang bagian atasnya tidak rata (bergelombang). Integral lipat dua bertujuan menghitung volume total roti tersebut dengan cara mengiris-irisnya.
+\end{konsepbox}
+
+\section{Langkah 3: Cara Menghitung (Integral Berulang)}
+
+Kita tidak bisa menghitung volume sekaligus. Kita harus melakukannya bertahap, satu variabel demi satu variabel.
+
+\[ \int_a^b \left( \int_c^d f(x,y) \, dy \right) \, dx \]
+
+\textbf{Aturan Emas:} Kerjakan dari \textbf{DALAM} ke \textbf{LUAR}.
+
+\begin{enumerate}
+    \item \textbf{Saat Integrasi terhadap $y$:} Anggap $x$ sebagai KONSTANTA (seperti angka 5 atau 10).
+    \item \textbf{Saat Integrasi terhadap $x$:} Lakukan setelah variabel $y$ hilang (menjadi angka).
+\end{enumerate}
+
+\begin{contohbox}{Integral Berulang Sederhana}
+Hitung $\int_0^2 \int_0^1 (x + 2y) \, dy \, dx$.
+
+\textbf{Langkah 1: Bagian Dalam ($\int \dots dy$)}
+\[ \int_0^1 (x + 2y) \, dy \]
+Ingat, $x$ dianggap angka. Integral dari $x$ adalah $xy$. Integral dari $2y$ adalah $y^2$.
+\[ = \left[ xy + y^2 \right]_{y=0}^{y=1} \]
+Masukkan batas atas ($y=1$) dan bawah ($y=0$):
+\[ = (x(1) + 1^2) - (x(0) + 0^2) = x + 1 \]
+
+\textbf{Langkah 2: Bagian Luar ($\int \dots dx$)}
+Sekarang kita integralkan hasil tadi ($x+1$) terhadap $x$ dari 0 sampai 2.
+\[ \int_0^2 (x + 1) \, dx = \left[ \frac{1}{2}x^2 + x \right]_0^2 \]
+\[ = (\frac{1}{2}(4) + 2) - 0 = 2 + 2 = 4 \]
+\textbf{Hasilnya: 4.}
+\end{contohbox}
+
+\section{Langkah 4: Daerah Bukan Persegi Panjang}
+
+Lantai ruangan kita tidak selalu persegi. Kadang bentuknya segitiga atau lengkung. Di sinilah batas integral menjadi **FUNGSI**, bukan angka.
+
+\[ \int_0^1 \int_0^x f(x,y) \, dy \, dx \]
+
+Perhatikan batas integral dalam: dari $0$ sampai $x$. Artinya, tinggi irisan kita berubah-ubah tergantung posisi $x$.
+
+\begin{ingatbox}
+    Integral \textbf{PALING LUAR} batasnya harus selalu \textbf{ANGKA} (Konstanta). Tidak boleh ada variabel di batas paling luar.
+\end{ingatbox}
+
+\begin{contohbox}{Daerah Segitiga}
+Hitung $\int_0^1 \int_0^x 2y \, dy \, dx$.
+
+\textbf{Langkah 1: Bagian Dalam}
+Integralkan $2y$ terhadap $y$. Batasnya dari $0$ sampai $x$.
+\[ \int_0^x 2y \, dy = \left[ y^2 \right]_{y=0}^{y=x} \]
+\[ = x^2 - 0^2 = x^2 \]
+
+\textbf{Langkah 2: Bagian Luar}
+Integralkan hasil tadi ($x^2$) terhadap $x$ dari 0 sampai 1.
+\[ \int_0^1 x^2 \, dx = \left[ \frac{1}{3}x^3 \right]_0^1 \]
+\[ = \frac{1}{3}(1)^3 - 0 = \frac{1}{3} \]
+\end{contohbox}
+
+\section{Langkah 5: Senjata Rahasia (Koordinat Polar)}
+
+Jika daerah integrasinya berbentuk **LINGKARAN**, jangan pakai $x$ dan $y$. Itu akan membuatmu menangis karena batasnya menjadi akar ($\sqrt{R^2-x^2}$). Gunakan Koordinat Polar ($r, \theta$).
+
+\begin{itemize}
+    \item $x^2 + y^2$ diganti jadi $r^2$.
+    \item Batas lingkaran jadi simpel: $r$ dari 0 sampai Jari-jari ($R$).
+    \item $\theta$ adalah sudut putaran (biasanya $0$ sampai $2\pi$ untuk satu lingkaran penuh).
+\end{itemize}
+
+\begin{konsepbox}{Pajak Jacobian}
+Saat pindah ke polar, elemen luas $dA$ berubah:
+\[ dA = \mathbf{r} \, dr \, d\theta \]
+Jangan lupa huruf \textbf{$r$} tambahan itu! Itu adalah "pajak" transformasi.
+\end{konsepbox}
+
+\begin{contohbox}{Volume di Bawah Paraboloid}
+Hitung volume di bawah $z = x^2 + y^2$ di dalam silinder $x^2 + y^2 \le 4$.
+
+\textbf{Analisis:}
+\begin{itemize}
+    \item Fungsi $x^2 + y^2$ menjadi $r^2$.
+    \item Daerah lingkaran jari-jari 2. Batas $r: 0 \to 2$, Batas $\theta: 0 \to 2\pi$.
+    \item Elemen luas $dA = r \, dr \, d\theta$.
+\end{itemize}
+
+\textbf{Integral:}
+\[ V = \int_0^{2\pi} \int_0^2 (r^2) \cdot r \, dr \, d\theta \]
+\[ = \int_0^{2\pi} \int_0^2 r^3 \, dr \, d\theta \]
+
+\textbf{Langkah 1 (Dalam):}
+\[ \int_0^2 r^3 \, dr = \left[ \frac{1}{4}r^4 \right]_0^2 = \frac{16}{4} = 4 \]
+
+\textbf{Langkah 2 (Luar):}
+\[ \int_0^{2\pi} 4 \, d\theta = \left[ 4\theta \right]_0^{2\pi} = 8\pi \]
+\end{contohbox}
+
+\section*{Rangkuman Akhir}
+
+Jika kamu bertemu soal Integral Lipat, ikuti algoritma ini:
+
+\begin{enumerate}
+    \item \textbf{Gambar Daerahnya!} Jangan dibayangkan saja. Sketsa di kertas.
+    \item \textbf{Tentukan Strategi.} Apakah daerahnya persegi? Segitiga? Atau Lingkaran (pakai Polar)?
+    \item \textbf{Susun Batas.} Ingat, batas terluar harus angka.
+    \item \textbf{Hitung.} Fokus satu per satu. Anggap variabel lain sebagai tetangga yang diam saja.
+\end{enumerate}
+
+Selamat belajar! Kalkulus itu tentang pola pikir, bukan sekadar menghafal rumus.
+
+\end{document}
